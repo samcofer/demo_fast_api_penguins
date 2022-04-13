@@ -1,15 +1,54 @@
-from typing import Optional
+from typing import Optional, List
+import pandas as pd
+from pydantic import BaseModel, Field
+import datetime as dt
 
 from fastapi import FastAPI
 
 app = FastAPI()
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+class Penguin(BaseModel):
+    species: Optional[str]
+    island: Optional[str]
+    bill_length_mm: Optional[float]
+    bill_depth_mm: Optional[float]
+    flipper_length_mm: Optional[float]
+    body_mass_g: Optional[int]
+    sex: Optional[str]
+    year: Optional[int]
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+class PenguinRaw(BaseModel):
+    study_name: str = Field(alias="studyName")
+    sample_number: int = Field(alias="Sample Number")
+    species: str = Field(alias="Species")
+    region: str = Field(alias="Region")
+    island: str = Field(alias="Island")
+    stage: str = Field(alias="Stage")
+    individual_id: str = Field(alias="Individual ID")
+    clutch_completion: str = Field(alias="Clutch Completion")
+    date_egg: Optional[dt.date] = Field(alias="Date Egg")
+    culmen_length_mm: Optional[float] = Field(alias="Culmen Length (mm)")
+    culmen_depth_mm: Optional[float] = Field(alias="Culmen Depth (mm)")
+    flipper_length_mm: Optional[float] = Field(alias="Flipper Length (mm)")
+    body_mass_g: Optional[float] = Field(alias="Body Mass (g)")
+    sex: str = Field(alias="Sex")
+    delta_15_n_o_oo: float = Field(alias="Delta 15 N (o/oo)")
+    delta_13_c_o_oo: float = Field(alias="Delta 13 C (o/oo)")
+
+
+@app.get("/penguins")
+def penguins(sample_size: Optional[int], response_model=List[Penguin]):
+    url = "https://github.com/allisonhorst/palmerpenguins/raw/master/inst/extdata/penguins.csv"
+    penguins_df = pd.read_csv(url)
+    penguins = [Penguin(**i) for i in penguins_df.to_dict(orient="records")]
+    return penguins
+
+
+@app.get("/raw_penguins")
+def raw_penguins(sample_size: Optional[int], response_model=List[PenguinRaw]):
+    url = "https://github.com/allisonhorst/palmerpenguins/raw/master/inst/extdata/penguins_raw.csv"
+    penguins_raw_df = pd.read_csv(url)
+    penguins_raw = [PenguinRaw(**i) for i in penguins_raw_df.to_dict(orient="records")]
+    return penguins_raw
