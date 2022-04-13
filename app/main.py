@@ -7,6 +7,7 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+
 class PenguinsBase(BaseModel):
     @validator('*')
     def change_nan_to_none(cls, v, field):
@@ -43,6 +44,11 @@ class PenguinRaw(PenguinsBase):
     sex: str = Field(alias="Sex")
     delta_15_n_o_oo: Optional[float] = Field(alias="Delta 15 N (o/oo)")
     delta_13_c_o_oo: Optional[float] = Field(alias="Delta 13 C (o/oo)")
+
+
+@app.get("/")
+def index():
+    return {"hello": "world"}
 
 
 @app.get("/penguins", response_model=List[Penguin])
