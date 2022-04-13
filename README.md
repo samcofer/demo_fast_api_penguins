@@ -1,7 +1,9 @@
 # demo-fastapi-penguins
 
 - Code: <https://github.com/SamEdwardes/demo-fastapi-penguins>
-- Deployment: <https://colorado.rstudio.com/rsc/demo-fastapi-penguins/docs/>
+- Deployment: <https://colorado.rstudio.com/rsc/demo-fastapi-penguins/docs>
+
+![screenshot](imgs/screenshot.png)
 
 ## Usage
 
