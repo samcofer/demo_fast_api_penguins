@@ -11,7 +11,7 @@ Create a virtual environment.
 
 ```bash
 python -m venv .venv
-source .venv/bin/activiate
+source .venv/bin/activate
 python -m pip install --upgrade pip wheel
 pip install -r app/requirements.txt
 ```
@@ -20,6 +20,23 @@ Then run the app.
 
 ```bash
 uvicorn app.main:app --reload
+```
+
+You could also call the API using `curl`:
+
+```bash
+curl -X 'GET' \
+  'https://colorado.rstudio.com/rsc/demo-fastapi-penguins/penguins?sample_size=1' \
+  -H 'accept: application/json'
+```
+
+If the API is private you will need to authenticate using your API key.
+
+```bash
+curl -X 'GET' \
+  'https://colorado.rstudio.com/rsc/demo-fastapi-penguins/penguins?sample_size=1' \
+  -H 'accept: application/json' \
+  -H "Authorization: Key ${CONNECT_API_KEY}"
 ```
 
 ## Deployment
