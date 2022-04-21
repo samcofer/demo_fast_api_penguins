@@ -46,11 +46,6 @@ class PenguinRaw(PenguinsBase):
     delta_13_c_o_oo: Optional[float] = Field(alias="Delta 13 C (o/oo)")
 
 
-@app.get("/")
-def index():
-    return {"hello": "world"}
-
-
 @app.get("/penguins", response_model=List[Penguin])
 def penguins(sample_size: Optional[int] = None):
     url = "https://github.com/allisonhorst/palmerpenguins/raw/master/inst/extdata/penguins.csv"
