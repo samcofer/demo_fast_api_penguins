@@ -9,7 +9,7 @@ Create a virtual environment.
 
 ```bash
 python -m venv .venv
-source .venv/bin/activiate
+source .venv/bin/activate
 python -m pip install --upgrade pip wheel
 pip install -r app/requirements.txt
 ```
@@ -22,6 +22,8 @@ uvicorn app.main:app --reload
 
 ## Deployment
 
+### Git-backed
+
 The app is automatically deployed to RStudio connect using git backed deployment. Make any changes to the code, then run the following:
 
 ```bash
@@ -33,3 +35,15 @@ rsconnect write-manifest fastapi \
 ```
 
 > ⚠️ Remember to update the app/requirements.txt file if you add any new packages.
+
+### Programatic
+
+You can deploy the app using the rsconnect cli:
+
+```bash
+rsconnect deploy fastapi \
+  --python .venv/bin/python \
+  --entrypoint main:app \
+  --new \
+  app
+```
