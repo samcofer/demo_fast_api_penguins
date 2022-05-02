@@ -1,7 +1,9 @@
 # demo-fastapi-penguins
 
 - Code: <https://github.com/SamEdwardes/demo-fastapi-penguins>
-- Deployment: <https://colorado.rstudio.com/rsc/demo-fastapi-penguins/docs/>
+- Deployment: <https://colorado.rstudio.com/rsc/demo-fastapi-penguins/docs>
+
+![screenshot](imgs/screenshot.png)
 
 ## Usage
 
@@ -18,6 +20,23 @@ Then run the app.
 
 ```bash
 uvicorn app.main:app --reload
+```
+
+You could also call the API using `curl`:
+
+```bash
+curl -X 'GET' \
+  'https://colorado.rstudio.com/rsc/demo-fastapi-penguins/penguins?sample_size=1' \
+  -H 'accept: application/json'
+```
+
+If the API is private you will need to authenticate using your API key.
+
+```bash
+curl -X 'GET' \
+  'https://colorado.rstudio.com/rsc/demo-fastapi-penguins/penguins?sample_size=1' \
+  -H 'accept: application/json' \
+  -H "Authorization: Key ${CONNECT_API_KEY}"
 ```
 
 ## Deployment
