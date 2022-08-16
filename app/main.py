@@ -48,7 +48,7 @@ class PenguinRaw(PenguinsBase):
 
 @app.get("/penguins", response_model=List[Penguin])
 def penguins(sample_size: Optional[int] = None):
-    url = "https://github.com/allisonhorst/palmerpenguins/raw/master/inst/extdata/penguins.csv"
+    url = "https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/inst/extdata/penguins.csv"
     penguins_df = pd.read_csv(url)
     if sample_size:
         penguins_df = penguins_df.sample(sample_size)
@@ -58,7 +58,7 @@ def penguins(sample_size: Optional[int] = None):
 
 @app.get("/raw_penguins", response_model=List[PenguinRaw])
 def raw_penguins(sample_size: Optional[int] = None):
-    url = "https://github.com/allisonhorst/palmerpenguins/raw/master/inst/extdata/penguins_raw.csv"
+    url = "https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/inst/extdata/penguins.csv"
     penguins_raw_df = pd.read_csv(url)
     if sample_size:
         penguins_raw_df = penguins_raw_df.sample(sample_size)
